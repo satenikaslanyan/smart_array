@@ -32,7 +32,7 @@ array::~array()
 void array::print_array() const
 {
 	for (int i = 0; i < size; i++) {
-	    std::cout << *(arr + i) << "  ";
+	    std::cout << arr[i] << "  ";
 	}
 	std::cout << std::endl;
 }
@@ -46,16 +46,16 @@ void array::resize(int i)
     int *new_arr = new int[i];
     if (i >= size) {
 	    for (int j = size; j < i; j++) {
-		    *(new_arr + j) = 0;
+		    new_arr[j] = 0;
 	    }
-	memset(&new_arr[0], 0, i * sizeof(int));
+//	memset(&new_arr[0], 0, i * sizeof(int));
 	    for(int j = 0; j < size; j++) {
-		    *(new_arr + j) = *(arr + j);
+		    new_arr[j] = arr[j];
 	    }
     }
     else {
 	    for(int j = 0; j < i; j++) {
-		    *(new_arr + j) = *(arr + j);
+		    new_arr[j] = arr[j];
 	    }
     }
     size = i;
@@ -86,13 +86,13 @@ array& array::operator=(const array& p)
 		this->size = p.size;
 		this->arr = new int[this->size];
 		for (int i = 0; i < size; i++) {
-			*(this->arr + i) = *(p.arr + i);
+			this->arr[i] = p.arr[i];
 		}
 		return *this;
 	}
 }
 
-bool array::operator ==(array i)
+bool array::operator==(array i)
 {
     if (size != i.size) {
         return false;
@@ -105,3 +105,41 @@ bool array::operator ==(array i)
         }
    }
 }
+
+void array::push_back(int v)
+{
+    resize(++size);
+    arr[size - 1] = v;
+}
+
+void array::pop_back()
+{
+    resize(--size);
+}
+
+void array::shift(int p, int c)
+{
+    for (int i = size - 1; i > p + 1; --i) {
+        arr[i] = arr[i - c];
+    }
+    for (int i = p; i < p + c; ++i) {
+        arr[i] = 0;
+    }
+}
+
+void array::insert(int p, int v, int c)
+{
+    resize(size + c);
+    shift(p, c);
+    for (int i = p; i < p + c; ++i) {
+        arr[i] = v;
+    }
+}
+
+void array::insert(int p, int v)
+{
+    resize(++size);
+    shift(p, 1);
+    arr[p] = v;
+}
+

@@ -6,7 +6,8 @@
 
 class Exception
 {
-    virtual void what() const = 0;
+public:
+    virtual void what() const {};
 };
 
 class Out_of_range : Exception
@@ -19,9 +20,11 @@ class array
 private:
 	int* arr;
 	int size;
+     
 public:
 	class Iterator {};	
 
+	array() {} 
 	array(int n, int v = 0); 
 
 	array(const array& p);
@@ -33,18 +36,18 @@ public:
 	const int& operator[](int i) const { return arr[i]; }
     int& at(int i);
 
-	array& operator =(const array& p);
-	bool operator ==(array i);
+	array& operator=(const array& p);
+	bool operator==(array i);
 	void resize(int i);
 
     void insert(int p, int v);
+    void insert(int p, int v, int c);
     void erase(int p);
 
     void push_back(int);
-    void pop_back() { --size; }
+    void pop_back();
 
-	Iterator begin();
-	Iterator end();
+    void shift(int, int);
 };
 
 template<typename It>
