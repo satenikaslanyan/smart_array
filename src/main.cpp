@@ -2,11 +2,11 @@
 
 int main()
 {
-    array a(8);
+    array a(6);
     array b(20);
     std::cout << "a array is: ";
     a.print_array();
-    a[5] = 6;
+    a[10] = 6;
     a[2] = a[5];
     std::cout << "a array is: ";
     a.print_array();
@@ -23,7 +23,7 @@ int main()
     } else {
         std::cout << "false\n";
     }
-    a.resize(12);
+    a.resize(5);
     std::cout << "a array is: ";
     a.print_array();
     b = a;

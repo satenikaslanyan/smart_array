@@ -14,6 +14,6 @@ public:
     int& operator [](int i);
     array& operator =(const array& p);
     bool operator ==(array i);
-    int& resize(int i);
+    void resize(int i);
 };
 

@@ -34,34 +34,41 @@ void array::print_array()
 	std::cout << std::endl;
 }
 
-int& array::resize(int i)
+void array::resize(int i)
 {
-    if(i < size) {
-        std::cout << "Invalid array size" << std::endl;
-    } else {
-        int *new_arr = new int[i+1];
-        for (int j = 0; j < i; j++) {
+    if(i < 0) {
+        std::cout << "Index is out of range" << std::endl;
+    } else if (i >= size) {
+        int *new_arr = new int[i];
+        for (int j = size; j < i; j++) {
             *(new_arr + j) = 0;
         }
-        for(int j = 0;j < size; j++) {
-            *(new_arr + j)=*(arr + j);
+        for(int j = 0; j < size; j++) {
+            *(new_arr + j) = *(arr + j);
         }
         size = i;
         delete [] arr;
         arr = new_arr;
-        return *(arr + i);
     }
-    return *(arr + i);
+    else {
+        int *new_arr = new int[i];
+        for(int j = 0; j < i; j++) {
+            *(new_arr + j) = *(arr + j);
+        }
+        size = i;
+        delete []arr;
+        arr = new_arr;
+    }
+
 }
 
 int& array::operator[](int i)
 {
-	if(i < 0 && i >= size) {
-		std::cout << "Invalid array size" << std::endl;
+	if(i < 0 || i >= size) {
+		std::cout << "Index is out of range" << std::endl;
 	} else {
 		return *(arr + i);
     }
-    return *(arr + 1);
 }
 
 array& array::operator =(const array& p)

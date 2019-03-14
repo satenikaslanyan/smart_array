@@ -1,0 +1,1 @@
+obj/array.dep obj/array.o: src/array.cpp inc/array.hpp
