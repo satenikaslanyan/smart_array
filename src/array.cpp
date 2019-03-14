@@ -8,7 +8,7 @@ array::array(int n, int v)
     arr = new int[n];
     assert(arr);
     for (int i = 0; i < n; ++i) {
-	    arr[i] = v; 
+	    arr[i] = v;
     }
     size = n;
 }
@@ -23,6 +23,7 @@ array::array(const array& p)
         arr[j] = p.arr[j];
     }
 }
+
 array::~array()
 {
 	delete [] arr;
@@ -48,7 +49,6 @@ void array::resize(int i)
 	    for (int j = size; j < i; j++) {
 		    new_arr[j] = 0;
 	    }
-//	memset(&new_arr[0], 0, i * sizeof(int));
 	    for(int j = 0; j < size; j++) {
 		    new_arr[j] = arr[j];
 	    }
@@ -117,29 +117,30 @@ void array::pop_back()
     resize(--size);
 }
 
-void array::shift(int p, int c)
+void array::shift(int p, int c, int d)
 {
-    for (int i = size - 1; i > p + 1; --i) {
-        arr[i] = arr[i - c];
-    }
-    for (int i = p; i < p + c; ++i) {
-        arr[i] = 0;
+    if (0 == d) {
+        for (int i = size - 1; i > p + 1; --i) {
+            arr[i] = arr[i - c];
+        }
+    } else if (1 == d) {
+        for (int i = p; i < size - 1; ++i) {
+            arr[i] = arr[i + c];
+        }
     }
 }
 
-void array::insert(int p, int v, int c)
+void array::insert(int p, int c)
 {
     resize(size + c);
-    shift(p, c);
+    shift(p, c, 0);
     for (int i = p; i < p + c; ++i) {
-        arr[i] = v;
+        std::cin >> arr[i];
     }
 }
 
-void array::insert(int p, int v)
+void array::erase(int p, int c)
 {
-    resize(++size);
-    shift(p, 1);
-    arr[p] = v;
+   shift(p, c, 1);
+   resize(size - c);
 }
-

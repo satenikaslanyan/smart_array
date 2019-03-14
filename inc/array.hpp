@@ -20,12 +20,13 @@ class array
 private:
 	int* arr;
 	int size;
-     
-public:
-	class Iterator {};	
 
-	array() {} 
-	array(int n, int v = 0); 
+    void shift(int, int, int);
+public:
+	class Iterator {};
+
+	array() { arr = nullptr; size = 0; }
+	array(int n, int v = 0);
 
 	array(const array& p);
 	~array();
@@ -40,14 +41,12 @@ public:
 	bool operator==(array i);
 	void resize(int i);
 
-    void insert(int p, int v);
-    void insert(int p, int v, int c);
-    void erase(int p);
+    void insert(int p, int c = 1);
+    void erase(int p, int c);
 
     void push_back(int);
     void pop_back();
 
-    void shift(int, int);
 };
 
 template<typename It>
