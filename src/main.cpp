@@ -31,5 +31,11 @@ int main()
     b.print_array();
     int d = b[5];
     std::cout << "d = " << d << std::endl;
+
+    array tmp;
+    for (int i = 0; i < 100000; ++i) {
+        tmp.push_back(i);  
+    }
+    tmp.print_array();
 }
 

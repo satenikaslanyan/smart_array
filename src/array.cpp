@@ -1,17 +1,21 @@
 #include "array.hpp"
+#include <cstring>
 
-array::array(int n)
+array::array(int n, int v)
+ : arr(nullptr)
+ , size(0)
 {
-    arr = NULL;
-	arr = new int[n];
+    arr = new int[n];
     assert(arr);
-	for (int i = 0; i < n; i++) {
-		*(arr + i) = 0;
+    for (int i = 0; i < n; ++i) {
+	    arr[i] = v; 
     }
-	size = n;
+    size = n;
 }
 
 array::array(const array& p)
+ : arr(nullptr)
+ , size(0)
 {
     size = p.size;
     arr = new int [size];
@@ -21,12 +25,11 @@ array::array(const array& p)
 }
 array::~array()
 {
-    if (arr != NULL) {
-        delete [] arr;
-    }
+	delete [] arr;
+	arr = nullptr;
 }
 
-void array::print_array()
+void array::print_array() const
 {
 	for (int i = 0; i < size; i++) {
 	    std::cout << *(arr + i) << "  ";
@@ -36,42 +39,45 @@ void array::print_array()
 
 void array::resize(int i)
 {
-    if(i < 0) {
+    if (i < 0) {
         std::cout << "Index is out of range" << std::endl;
-    } else if (i >= size) {
-        int *new_arr = new int[i];
-        for (int j = size; j < i; j++) {
-            *(new_arr + j) = 0;
-        }
-        for(int j = 0; j < size; j++) {
-            *(new_arr + j) = *(arr + j);
-        }
-        size = i;
-        delete [] arr;
-        arr = new_arr;
+	    return;
+    }
+    int *new_arr = new int[i];
+    if (i >= size) {
+	    for (int j = size; j < i; j++) {
+		    *(new_arr + j) = 0;
+	    }
+	memset(&new_arr[0], 0, i * sizeof(int));
+	    for(int j = 0; j < size; j++) {
+		    *(new_arr + j) = *(arr + j);
+	    }
     }
     else {
-        int *new_arr = new int[i];
-        for(int j = 0; j < i; j++) {
-            *(new_arr + j) = *(arr + j);
-        }
-        size = i;
-        delete []arr;
-        arr = new_arr;
+	    for(int j = 0; j < i; j++) {
+		    *(new_arr + j) = *(arr + j);
+	    }
     }
+    size = i;
+    delete [] arr;
+    arr = new_arr;
 
 }
 
 int& array::operator[](int i)
 {
-	if(i < 0 || i >= size) {
-		std::cout << "Index is out of range" << std::endl;
-	} else {
-		return *(arr + i);
-    }
+    return arr[i];
 }
 
-array& array::operator =(const array& p)
+int& array::at(int i)
+{
+	if(i < 0 || i >= size) {
+        throw std::out_of_range("Index is out of range");
+    }
+    return arr[i];
+}
+
+array& array::operator=(const array& p)
 {
 	if (this == &p) {
 		return *this;

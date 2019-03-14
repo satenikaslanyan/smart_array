@@ -1,19 +1,60 @@
-#include<iostream>
+#ifndef ARRAY_H
+#define ARRAY_H
+
+#include <iostream>
 #include <assert.h>
+
+class Exception
+{
+    virtual void what() const = 0;
+};
+
+class Out_of_range : Exception
+{
+    //TODO
+};
 
 class array
 {
-    private:
-        int* arr;
-        int size;
+private:
+	int* arr;
+	int size;
 public:
-    array(int n = 10);
-    array(const array& p);
-    ~array();
-    void print_array();
-    int& operator [](int i);
-    array& operator =(const array& p);
-    bool operator ==(array i);
-    void resize(int i);
+	class Iterator {};	
+
+	array(int n, int v = 0); 
+
+	array(const array& p);
+	~array();
+	void print_array() const;
+    int size_() const { return size; }
+
+	int& operator[](int i);
+	const int& operator[](int i) const { return arr[i]; }
+    int& at(int i);
+
+	array& operator =(const array& p);
+	bool operator ==(array i);
+	void resize(int i);
+
+    void insert(int p, int v);
+    void erase(int p);
+
+    void push_back(int);
+    void pop_back() { --size; }
+
+	Iterator begin();
+	Iterator end();
 };
 
+template<typename It>
+void print_array(It b, It e)
+{
+	for (; b != e; ++b) {
+		//cout << *b ...
+	}
+}
+
+//for (auto it = v.begin(); it != v.end(); ++it);
+
+#endif
